@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment-frontend
+  labels:
+    app: {{ .Release.Name }}-frontend
+spec:
+  replicas: {{ .Values.replicaCounts }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-frontend
+  strategy:
+    rollingUpdate:
+      maxSurge      : 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-frontend
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-frontend
+        image: {{ .Values.container.frontendImage }}
+        resources:
+          limits:
+            memory: "2G"
+            cpu: "500m"
+        ports:
+          - containerPort: 8080
+            # hostPort: 8888
+        env: 
+        #   - name: SERVICE_IP
+        #     valueFrom:
+        #       fieldRef:
+        #         fieldPath: status.hostIP
+          
+          - name: VUE_APP_REAL_WORLD_API_URL
+            # value: http://$(SERVICE_IP):8000/api
+            value: http://my-aplication/api
+        # command:
+        #   - tail
+        #   - -f
+        #   - /etc/hosts
+    
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-frontend
+spec:
+  selector:
+    app: {{ .Release.Name }}-frontend
+  # type: NodePort
+  ports:
+  - name      : {{ .Release.Name }}-frontend-listener
+    protocol  : TCP
+    port      : 8080
+    targetPort: 8080
+            

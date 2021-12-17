@@ -1,0 +1,8 @@
+container:
+  frontendImage   : rudstanislav/realworldapp:v2
+  webserverImage  : rudstanislav/nginx:latest
+  apiserverImage  : rudstanislav/python-api-server:v3
+
+replicaCounts: 1
+
+targetCPUUtilizationPercentage: 40

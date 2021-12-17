@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment-api-server
+  labels:
+    app: {{ .Release.Name }}-api-server
+spec:
+  replicas: {{ .Values.replicaCounts}}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-api-server
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-api-server
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-api-server
+        image: {{ .Values.container.apiserverImage}}
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 8000
+            # hostPort: 8000
+        env: 
+          - name: DATABASE_URL
+            value: postgresql://postgres:postgres@{{ .Release.Name }}-db/app
+          - name: SECRET_KEY
+            value: secret
+
+        # command:
+        #   - tail
+        #   - -f
+        #   - /etc/hosts
+    
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-api-server
+spec:
+  selector:
+    app: {{ .Release.Name }}-api-server
+  # type: NodePort
+  ports:
+  - name      : {{ .Release.Name }}-api-listener 
+    port      : 8000
+    targetPort: 8000
+            
