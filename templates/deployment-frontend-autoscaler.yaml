@@ -8,5 +8,5 @@ spec:
     kind: Deployment
     name: {{ .Release.Name }}-deployment-frontend
   minReplicas: 1
-  maxReplicas: 2
+  maxReplicas: 1
   targetCPUUtilizationPercentage: {{ .Values.targetCPUUtilizationPercentage}}

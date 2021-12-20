@@ -24,8 +24,11 @@ spec:
         image: {{ .Values.container.webserverImage}} 
         resources:
           limits:
+            cpu: "500m"
             memory: "1G"
-            cpu: "1"
+          requests:
+            cpu: "100m"
+            memory: "500Mi"
         ports:
           - containerPort: 80
             # hostPort: 80
@@ -56,7 +59,7 @@ spec:
     app: {{ .Release.Name }}-webserver
   # type: NodePort
   ports:
-  - name      : {{ .Release.Name }}-webserver-listener
+  - name      : {{ .Release.Name }}-webserver
     protocol  : TCP 
     port      : 80
     targetPort: 80

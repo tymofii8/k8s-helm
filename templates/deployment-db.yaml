@@ -24,8 +24,11 @@ spec:
         image: rudstanislav/postgres:v5
         resources:
           limits:
-            memory: "128Mi"
             cpu: "500m"
+            memory: "128Mi"
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
         ports:
           - containerPort: 5432
         volumeMounts:
