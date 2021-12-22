@@ -4,6 +4,7 @@ metadata:
   name: {{ .Release.Name }}-deployment-api-server
   labels:
     app: {{ .Release.Name }}-api-server
+
 spec:
   replicas: {{ .Values.replicaCounts}}
   selector:
@@ -18,6 +19,7 @@ spec:
     metadata:
       labels:
         app: {{ .Release.Name }}-api-server
+        
     spec:
       containers:
       - name: {{ .Release.Name }}-api-server
