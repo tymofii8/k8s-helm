@@ -1,7 +1,7 @@
 container:
-  frontendImage   : rudstanislav/realworldapp:v2
+  frontendImage   : rudstanislav/realworldapp:latest
   webserverImage  : rudstanislav/nginx:latest
-  apiserverImage  : rudstanislav/python-api-server:v3
+  apiserverImage  : rudstanislav/python-api-server:latest
 
 replicaCounts: 1
 
