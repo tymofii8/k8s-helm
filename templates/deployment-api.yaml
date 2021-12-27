@@ -19,11 +19,12 @@ spec:
     metadata:
       labels:
         app: {{ .Release.Name }}-api-server
-        
+
     spec:
       containers:
       - name: {{ .Release.Name }}-api-server
         image: {{ .Values.container.apiserverImage}}
+        imagePullPolicy: Always
         resources:
           limits:
             cpu: "500m"

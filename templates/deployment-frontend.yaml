@@ -22,6 +22,7 @@ spec:
       containers:
       - name: {{ .Release.Name }}-frontend
         image: {{ .Values.container.frontendImage }}
+        imagePullPolicy: Always
         resources:
           limits:
             cpu: "500m"
