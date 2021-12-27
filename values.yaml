@@ -1,5 +1,5 @@
 container:
-  frontendImage   : rudstanislav/realworldapp:latest
+  frontendImage   : rudstanislav/realworldapp:v2
   webserverImage  : rudstanislav/nginx:latest
   apiserverImage  : rudstanislav/python-api-server:latest
 
