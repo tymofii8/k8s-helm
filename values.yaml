@@ -5,4 +5,4 @@ container:
 
 replicaCounts: 1
 
-targetCPUUtilizationPercentage: 40
+targetCPUUtilizationPercentage: 60
