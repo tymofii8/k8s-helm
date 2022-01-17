@@ -1,0 +1,25 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: pgsql-config
+  namespace: default
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile
+data:
+  postgresql.conf: |
+
+        log_destination = 'stderr'             
+        logging_collector = off         
+        log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
+        # log_truncate_on_rotation = off         
+        log_rotation_age = 1d                  
+        log_min_messages = 'log'             
+        log_min_error_statement = 'error' 
+        # log_min_duration_statement = -1      
+        log_connections = on
+        #log_disconnections = off
+        #log_duration = off
+        #log_error_verbosity = default         
+        log_hostname = on
+        log_line_prefix = '%m [%p] %q%u@%d '     
+        log_timezone = 'UTC'

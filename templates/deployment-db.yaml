@@ -34,10 +34,21 @@ spec:
         volumeMounts:
           - name: data
             mountPath: /var/lib/postgresql/data
+            readOnly: false
+          - name: pgsql-config
+            mountPath: /etc/postgresql
+            subPath: postgresql.conf
+            readOnly: false
       volumes: 
       - name: data
         persistentVolumeClaim:
           claimName: my-claim
+      - name: pgsql-config
+        configMap:
+          name: pgsql-config
+          items:
+            - key: postgresql.conf
+              path: postgresql.conf
 --- 
 apiVersion: v1
 kind: Service
@@ -50,4 +61,4 @@ spec:
   ports:
   - port: 5432
     targetPort: 5432
-  
+
