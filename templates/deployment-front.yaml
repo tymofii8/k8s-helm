@@ -33,7 +33,7 @@ spec:
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: -{{ .Release.Name }}production-frontend-autoscaling
+  name: {{ .Release.Name }}-production-frontend-autoscaling
   labels:
     app: {{ .Release.Name }}-front
 spec:
