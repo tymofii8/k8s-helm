@@ -1,21 +1,21 @@
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: production-frontend
+  name: {{ .Release.Name }}-production-frontend
   labels:
-    app: front
+    app: {{ .Release.Name }}-front
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: front
+      app: {{ .Release.Name }}-front
   template:
     metadata:
       labels:
-        app: front
+        app: {{ .Release.Name }}-front
     spec:
       containers:
-      - name: production-frontend
+      - name: {{ .Release.Name }}-production-frontend
         image: {{ .Values.container.frontendImage }}
         ports:
         - containerPort: 80
@@ -33,13 +33,13 @@ spec:
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: production-frontend-autoscaling
+  name: -{{ .Release.Name }}production-frontend-autoscaling
   labels:
-    app: front
+    app: {{ .Release.Name }}-front
 spec:
   scaleTargetRef:
     kind: "Deployment"
-    name: front
+    name: {{ .Release.Name }}-front
     apiVersion: "apps/v1"
   minReplicas: 1
   maxReplicas: 2
