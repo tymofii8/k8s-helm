@@ -1,21 +1,21 @@
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: {{ .Release.Name }}-production-frontend
+  name: production-frontend
   labels:
-    app: {{ .Release.Name }}-front
+    app: front
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-front
+      app: front
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-front
+        app: front
     spec:
       containers:
-      - name: {{ .Release.Name }}-production-frontend
+      - name: roduction-frontend
         image: {{ .Values.container.frontendImage }}
         ports:
         - containerPort: 80
@@ -33,13 +33,13 @@ spec:
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: {{ .Release.Name }}-production-frontend-autoscaling
+  name: roduction-frontend-autoscaling
   labels:
-    app: {{ .Release.Name }}-front
+    app: front
 spec:
   scaleTargetRef:
     kind: "Deployment"
-    name: {{ .Release.Name }}-front
+    name: front
     apiVersion: "apps/v1"
   minReplicas: 1
   maxReplicas: 2
