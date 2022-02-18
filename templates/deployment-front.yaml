@@ -15,7 +15,7 @@ spec:
         app: front
     spec:
       containers:
-      - name: roduction-frontend
+      - name: production-frontend
         image: {{ .Values.container.frontendImage }}
         ports:
         - containerPort: 80
@@ -33,7 +33,7 @@ spec:
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: roduction-frontend-autoscaling
+  name: production-frontend-autoscaling
   labels:
     app: front
 spec:
