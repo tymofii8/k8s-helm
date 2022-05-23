@@ -1,5 +1,5 @@
 container:
-  frontendImage   : nyamtsu/react:latest
+  frontendImage   : timofii/angular-app:latest
 
 replicaCounts: 1
 
