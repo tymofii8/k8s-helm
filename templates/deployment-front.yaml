@@ -1,50 +1,41 @@
-apiVersion: "apps/v1"
-kind: "Deployment"
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: production-frontend
-  labels:
-    app: front
+  name: tim-frontend-app
+  namespace: tim-test-namespace
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: front
+      app: tim-frontend-app
+      tier: tim-frontend
+  replicas: 2
   template:
     metadata:
       labels:
-        app: front
+        app: tim-frontend-app
+        tier: tim-frontend
     spec:
       containers:
-      - name: production-frontend
+      - name: tim-frontend-app
         image: {{ .Values.container.frontendImage }}
         ports:
         - containerPort: 80
-        env:
-        - name: REACT_APP_BACKEND_URL
-          value: http://nyamtsu.pp.ua/api
         resources:
-          requests:
-            memory: "512Mi"
-            cpu: "125m"
           limits:
-            memory: "512Mi"
-            cpu: "125m"
----
-apiVersion: "autoscaling/v2beta1"
-kind: "HorizontalPodAutoscaler"
-metadata:
-  name: production-frontend-autoscaling
-  labels:
-    app: front
-spec:
-  scaleTargetRef:
-    kind: "Deployment"
-    name: front
-    apiVersion: "apps/v1"
-  minReplicas: 1
-  maxReplicas: 2
-  metrics:
-  - type: "Resource"
-    resource:
-      name: "cpu"
-      targetAverageUtilization: 80
+            cpu: 900m
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        volumeMounts:
+        - name: app-conf
+          mountPath: /etc/nginx/conf.d/app.conf
+          subPath: app.conf
+          readOnly: true
+      volumes:
+      - name: app-conf
+        configMap:
+          name: app-conf
+          items:
+            - key: app.conf
+              path: app.conf
